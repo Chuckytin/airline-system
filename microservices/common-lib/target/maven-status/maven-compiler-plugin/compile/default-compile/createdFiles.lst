@@ -1,0 +1,14 @@
+com\airline\payload\request\CityRequest$CityRequestBuilder.class
+com\airline\payload\response\AirportResponse.class
+com\airline\CommonLibApplication.class
+com\airline\embeddable\GeoCode$GeoCodeBuilder.class
+com\airline\payload\response\CityResponse.class
+com\airline\payload\request\AirportRequest.class
+com\airline\payload\response\ApiResponse.class
+com\airline\embeddable\Address.class
+com\airline\payload\response\CityResponse$CityResponseBuilder.class
+com\airline\embeddable\Address$AddressBuilder.class
+com\airline\payload\response\AirportResponse$AirportResponseBuilder.class
+com\airline\payload\request\CityRequest.class
+com\airline\payload\request\AirportRequest$AirportRequestBuilder.class
+com\airline\embeddable\GeoCode.class
