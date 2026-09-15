@@ -27,7 +27,7 @@ public interface AirportMapper {
     @BeanMapping(ignoreUnmappedSourceProperties = "cityId")
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "city", ignore = true)
-    Airport updateEntity(@MappingTarget Airport entity, AirportRequest request);
+    void updateEntity(@MappingTarget Airport entity, AirportRequest request);
 
     @Mapping(target = "detailedName", ignore = true)
     AirportResponse toResponse(Airport airport);

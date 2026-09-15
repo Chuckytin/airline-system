@@ -21,7 +21,7 @@ public interface CityMapper {
     City toEntity(CityRequest request);
 
     @Mapping(target = "id", ignore = true)
-    City updateEntity(@MappingTarget City entity, CityRequest request);
+    void updateEntity(@MappingTarget City entity, CityRequest request);
 
     CityResponse toResponse(City city);
 

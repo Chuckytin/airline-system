@@ -6,11 +6,12 @@
     <parent>
         <groupId>com.airline</groupId>
         <artifactId>services</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>location-service</artifactId>
+    <version>0.1.0</version>
     <packaging>jar</packaging>
 
     <name>location-service</name>
@@ -18,11 +19,11 @@
 
     <dependencies>
 
-        <!-- COMMON-LIB con todos los mappers -->
+        <!-- COMMON-LIB -->
         <dependency>
             <groupId>com.airline</groupId>
             <artifactId>common-lib</artifactId>
-            <version>${project.version}</version>
+            <version>0.1.0</version>
         </dependency>
 
         <dependency>
@@ -65,6 +66,7 @@
             <artifactId>spring-boot-starter-webmvc-test</artifactId>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
     <build>

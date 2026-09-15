@@ -1,0 +1,56 @@
+package com.airline.exception;
+
+import lombok.Getter;
+
+@Getter
+public enum ErrorCode {
+
+    // ===== 400 - BAD REQUEST =====
+    VALIDATION_ERROR(400),
+    INVALID_REQUEST(400),
+    TYPE_MISMATCH(400),
+    MALFORMED_JSON(400),
+    INVALID_CITY_CODE(400),
+    INVALID_IATA_CODE(400),
+    INSUFFICIENT_SEATS(400),
+
+    // ===== 401 - UNAUTHORIZED =====
+    INVALID_CREDENTIALS(401),
+    AUTHENTICATION_REQUIRED(401),
+    INVALID_TOKEN(401),
+    JWT_EXPIRED(401),
+
+    // ===== 403 - FORBIDDEN =====
+    ACCESS_DENIED(403),
+    USER_INACTIVE(403),
+
+    // ===== 404 - NOT FOUND =====
+    RESOURCE_NOT_FOUND(404),
+    USER_NOT_FOUND(404),
+    CITY_NOT_FOUND(404),
+    AIRPORT_NOT_FOUND(404),
+    FLIGHT_NOT_FOUND(404),
+    BOOKING_NOT_FOUND(404),
+
+    // ===== 409 - CONFLICT =====
+    CONFLICT(409),
+    DATABASE_CONSTRAINT(409),
+    EMAIL_ALREADY_EXISTS(409),
+    CITY_CODE_ALREADY_EXISTS(409),
+    AIRPORT_IATA_ALREADY_EXISTS(409),
+    FLIGHT_NUMBER_ALREADY_EXISTS(409),
+    BOOKING_ALREADY_CANCELLED(409),
+
+    // ===== 429 - TOO MANY REQUESTS =====
+    RATE_LIMIT_EXCEEDED(429),
+
+    // ===== 500 - INTERNAL SERVER ERROR =====
+    INTERNAL_ERROR(500);
+
+    private final int httpStatus;
+
+    ErrorCode(int httpStatus) {
+        this.httpStatus = httpStatus;
+    }
+
+}

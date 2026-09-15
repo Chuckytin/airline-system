@@ -1,5 +1,8 @@
 package com.airline.service.impl;
 
+import com.airline.exception.ErrorCode;
+import com.airline.exception.ResourceAlreadyExistsException;
+import com.airline.exception.ResourceNotFoundException;
 import com.airline.mapper.AirportMapper;
 import com.airline.model.Airport;
 import com.airline.model.City;
@@ -26,26 +29,31 @@ public class AirportServiceImpl implements AirportService {
     @Override
     @Transactional
     public AirportResponse createAirport(AirportRequest airportRequest) {
-
         if (airportRepository.existsByIataCode(airportRequest.getIataCode())) {
-            throw new RuntimeException("Airport with given IATA code already exists");
+            throw new ResourceAlreadyExistsException(
+                    ErrorCode.AIRPORT_IATA_ALREADY_EXISTS,
+                    "Airport", "iataCode", airportRequest.getIataCode()
+            );
         }
 
         City city = cityRepository.findById(airportRequest.getCityId())
-                .orElseThrow(() -> new RuntimeException("City not found"));
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        ErrorCode.CITY_NOT_FOUND, "City", airportRequest.getCityId()
+                ));
+
         Airport airport = airportMapper.toEntity(airportRequest);
         airport.setCity(city);
 
         Airport savedAirport = airportRepository.save(airport);
-
         return airportMapper.toResponse(savedAirport);
     }
 
     @Override
     public AirportResponse getAirportById(Long id) {
         Airport airport = airportRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Airport not found with given id"));
-
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        ErrorCode.AIRPORT_NOT_FOUND, "Airport", id
+                ));
         return airportMapper.toResponse(airport);
     }
 
@@ -59,25 +67,32 @@ public class AirportServiceImpl implements AirportService {
     @Transactional
     public AirportResponse updateAirport(Long id, AirportRequest airportRequest) {
         Airport existingAirport = airportRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Airport not found with given id"));
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        ErrorCode.AIRPORT_NOT_FOUND, "Airport", id
+                ));
 
+        // Verificar IATA duplicado solo si cambia
         if (airportRequest.getIataCode() != null &&
                 !airportRequest.getIataCode().equals(existingAirport.getIataCode()) &&
                 airportRepository.existsByIataCode(airportRequest.getIataCode())) {
-            throw new RuntimeException("Airport with given IATA code already exists");
+            throw new ResourceAlreadyExistsException(
+                    ErrorCode.AIRPORT_IATA_ALREADY_EXISTS,
+                    "Airport", "iataCode", airportRequest.getIataCode()
+            );
         }
 
-        // Si cambiara el cityId actualizaría la relación
+        // Si cambia el cityId, actualizar la relación
         if (airportRequest.getCityId() != null &&
                 !airportRequest.getCityId().equals(existingAirport.getCity().getId())) {
             City city = cityRepository.findById(airportRequest.getCityId())
-                    .orElseThrow(() -> new RuntimeException("City not found with given id"));
+                    .orElseThrow(() -> new ResourceNotFoundException(
+                            ErrorCode.CITY_NOT_FOUND, "City", airportRequest.getCityId()
+                    ));
             existingAirport.setCity(city);
         }
 
         airportMapper.updateEntity(existingAirport, airportRequest);
         Airport updatedAirport = airportRepository.save(existingAirport);
-
         return airportMapper.toResponse(updatedAirport);
     }
 
@@ -85,16 +100,15 @@ public class AirportServiceImpl implements AirportService {
     @Transactional
     public void deleteAirportById(Long id) {
         if (!airportRepository.existsById(id)) {
-            throw new RuntimeException("Airport not found with given id");
+            throw new ResourceNotFoundException(ErrorCode.AIRPORT_NOT_FOUND, "Airport", id);
         }
-
         airportRepository.deleteById(id);
     }
 
     @Override
     public Page<AirportResponse> getAirportsByCityId(Long cityId, Pageable pageable) {
         if (!cityRepository.existsById(cityId)) {
-            throw new RuntimeException("City not found with given id");
+            throw new ResourceNotFoundException(ErrorCode.CITY_NOT_FOUND, "City", cityId);
         }
         return airportRepository.findByCityId(cityId, pageable)
                 .map(airportMapper::toResponse);

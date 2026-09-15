@@ -19,6 +19,7 @@
         </processorPath>
         <module name="location-service" />
         <module name="common-lib" />
+        <module name="user-service" />
       </profile>
     </annotationProcessing>
   </component>
@@ -27,6 +28,7 @@
       <module name="airline-gds-parent" options="" />
       <module name="common-lib" options="-parameters" />
       <module name="location-service" options="-parameters" />
+      <module name="user-service" options="-parameters" />
     </option>
   </component>
 </project>

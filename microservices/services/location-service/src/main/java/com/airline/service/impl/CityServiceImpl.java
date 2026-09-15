@@ -1,5 +1,8 @@
 package com.airline.service.impl;
 
+import com.airline.exception.ErrorCode;
+import com.airline.exception.ResourceAlreadyExistsException;
+import com.airline.exception.ResourceNotFoundException;
 import com.airline.mapper.CityMapper;
 import com.airline.model.City;
 import com.airline.payload.request.CityRequest;
@@ -23,9 +26,11 @@ public class CityServiceImpl implements CityService {
     @Override
     @Transactional
     public CityResponse createCity(CityRequest cityRequest) {
-
         if (cityRepository.existsByCityCode(cityRequest.getCityCode())) {
-            throw new RuntimeException("City with given code already exists");
+            throw new ResourceAlreadyExistsException(
+                    ErrorCode.CITY_CODE_ALREADY_EXISTS,
+                    "City", "cityCode", cityRequest.getCityCode()
+            );
         }
 
         City city = cityMapper.toEntity(cityRequest);
@@ -36,35 +41,39 @@ public class CityServiceImpl implements CityService {
     @Override
     public CityResponse getCityById(Long id) {
         City city = cityRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("City not found with given id"));
-
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        ErrorCode.CITY_NOT_FOUND, "City", id
+                ));
         return cityMapper.toResponse(city);
     }
 
     @Override
     @Transactional
     public CityResponse updateCity(Long id, CityRequest cityRequest) {
-        City existing = cityRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("City not found with given id"));
+        City existingCity = cityRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        ErrorCode.CITY_NOT_FOUND, "City", id
+                ));
 
-        if (!cityRequest.getCityCode().equals(existing.getCityCode()) &&
-                cityRepository.existsByCityCode(cityRequest.getCityCode())
-        ) {
-            throw new RuntimeException("City with given code already exists");
+        if (!cityRequest.getCityCode().equals(existingCity.getCityCode()) &&
+                cityRepository.existsByCityCode(cityRequest.getCityCode())) {
+            throw new ResourceAlreadyExistsException(
+                    ErrorCode.CITY_CODE_ALREADY_EXISTS,
+                    "City", "cityCode", cityRequest.getCityCode()
+            );
         }
 
-        City updated = cityRepository.save(cityMapper.updateEntity(existing, cityRequest));
-
-        return cityMapper.toResponse(updated);
+        cityMapper.updateEntity(existingCity, cityRequest);
+        City updatedCity = cityRepository.save(existingCity);
+        return cityMapper.toResponse(updatedCity);
     }
 
     @Override
     @Transactional
     public void deleteCityById(Long id) {
         if (!cityRepository.existsById(id)) {
-            throw new RuntimeException("City not found with given id");
+            throw new ResourceNotFoundException(ErrorCode.CITY_NOT_FOUND, "City", id);
         }
-
         cityRepository.deleteById(id);
     }
 

@@ -12,14 +12,19 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "airports")
+@Table(
+        name = "airports",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "uk_airport_iata", columnNames = "iataCode")
+        }
+)
 public class Airport {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false, length = 3)
+    @Column(nullable = false, length = 3)
     private String iataCode;
 
     @Column(nullable = false)
