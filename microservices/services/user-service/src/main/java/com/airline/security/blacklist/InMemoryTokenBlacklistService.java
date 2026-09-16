@@ -37,7 +37,7 @@ public class InMemoryTokenBlacklistService implements TokenBlacklistService {
     /**
      * Limpia tokens expirados cada hora.
      */
-    @Scheduled(fixedRate = 3600000)
+    @Scheduled(fixedRateString = "${app.blacklist.cleanup.rate-ms}")
     public void clearExpired() {
         Instant now = Instant.now();
         int before = blacklist.size();
