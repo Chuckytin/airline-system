@@ -1,5 +1,8 @@
 package com.airline.exception;
 
+/**
+ * Excepción lanzada cuando una validación de negocio falla.
+ */
 public class ValidationException extends BusinessException {
 
     public ValidationException(String message) {

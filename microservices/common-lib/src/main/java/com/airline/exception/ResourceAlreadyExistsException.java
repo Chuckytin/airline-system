@@ -1,5 +1,8 @@
 package com.airline.exception;
 
+/**
+ * Excepción lanzada cuando se intenta crear un recurso que ya existe.
+ */
 public class ResourceAlreadyExistsException extends BusinessException {
 
     public ResourceAlreadyExistsException(ErrorCode errorCode, String message) {

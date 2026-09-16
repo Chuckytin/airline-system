@@ -1,5 +1,8 @@
 package com.airline.exception;
 
+/**
+ * Excepción lanzada cuando un recurso solicitado no existe.
+ */
 public class ResourceNotFoundException extends BusinessException {
 
     public ResourceNotFoundException(ErrorCode errorCode, String message) {
