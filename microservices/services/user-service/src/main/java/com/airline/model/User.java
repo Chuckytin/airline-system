@@ -3,9 +3,11 @@ package com.airline.model;
 import com.airline.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Getter
@@ -20,6 +22,7 @@ import java.time.LocalDateTime;
                 @UniqueConstraint(name = "uk_user_email", columnNames = "email")
         }
 )
+@EntityListeners(AuditingEntityListener.class)
 public class User {
 
     @Id
@@ -46,24 +49,22 @@ public class User {
     @Builder.Default
     private Boolean active = true;
 
-    @CreationTimestamp
+    @CreatedDate
     @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    private Instant createdAt;
 
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
+    @LastModifiedDate
+    @Column(nullable = false)
+    private Instant updatedAt;
 
     private LocalDateTime lastLogin;
-
-    // ===== Soft delete =====
 
     private LocalDateTime deletedAt;
 
     private String deletedBy;
 
-    // ===== Helper =====
 
-    public boolean isDeleted() {
+    public boolean hasBeenDeleted() {
         return deletedAt != null;
     }
 
