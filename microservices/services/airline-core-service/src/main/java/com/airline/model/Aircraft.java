@@ -4,8 +4,9 @@ import com.airline.enums.AircraftStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -22,6 +23,7 @@ import java.time.LocalDate;
                 @UniqueConstraint(name = "uk_aircraft_code", columnNames = "code")
         }
 )
+@EntityListeners(AuditingEntityListener.class)
 public class Aircraft {
 
     @Id
@@ -81,11 +83,11 @@ public class Aircraft {
 
     private Long currentAirportId;
 
-    @CreationTimestamp
+    @CreatedDate
     @Column(nullable = false, updatable = false)
     private Instant createdAt;
 
-    @UpdateTimestamp
+    @LastModifiedDate
     @Column(nullable = false)
     private Instant updatedAt;
 
