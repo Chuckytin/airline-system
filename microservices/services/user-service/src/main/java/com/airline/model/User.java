@@ -64,7 +64,7 @@ public class User {
     private String deletedBy;
 
 
-    public boolean hasBeenDeleted() {
+    public boolean isDeleted() {
         return deletedAt != null;
     }
 
