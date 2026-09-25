@@ -32,6 +32,8 @@ public interface FlightInstanceMapper {
     @Mapping(target = "schedule", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "status", ignore = true)
+    @Mapping(target = "active", ignore = true)
     void updateEntity(@MappingTarget FlightInstance entity, FlightInstanceRequest request);
 
     @BeanMapping(ignoreUnmappedSourceProperties = "formattedDuration")

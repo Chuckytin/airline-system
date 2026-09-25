@@ -15,7 +15,7 @@ import lombok.*;
 @Table(
         name = "airports",
         uniqueConstraints = {
-                @UniqueConstraint(name = "uk_airport_iata", columnNames = "iataCode")
+                @UniqueConstraint(name = "uk_airport_iata", columnNames = "iata_code")
         }
 )
 public class Airport {
@@ -39,7 +39,8 @@ public class Airport {
     @Column(length = 50)
     private String timeZone;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "city_id", nullable = false)
     @JsonIgnore
     private City city;
 

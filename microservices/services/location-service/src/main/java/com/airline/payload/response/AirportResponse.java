@@ -23,10 +23,13 @@ public class AirportResponse {
     private CityResponse city;
 
     public String getDetailedName() {
+        if (name == null) {
+            return null;
+        }
         if (city != null && city.getCountryCode() != null) {
             return name.toUpperCase() + "/" + city.getCountryCode();
         }
-        return name != null ? name.toUpperCase() : null;
+        return name.toUpperCase();
     }
 
 }

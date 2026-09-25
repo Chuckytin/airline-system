@@ -15,14 +15,8 @@ public interface AircraftRepository extends JpaRepository<Aircraft, Long> {
 
     boolean existsByCode(String code);
 
-    List<Aircraft> findAllByAirlineId(Long airlineId);
-
     Page<Aircraft> findAllByAirlineId(Long airlineId, Pageable pageable);
 
-    Page<Aircraft> findAllByStatus(AircraftStatus status, Pageable pageable);
-
     List<Aircraft> findAllByAirlineIdAndStatus(Long airlineId, AircraftStatus status);
-
-    Page<Aircraft> findAllByAvailable(Boolean available, Pageable pageable);
 
 }

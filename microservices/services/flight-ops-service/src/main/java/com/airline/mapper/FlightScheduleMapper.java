@@ -25,7 +25,7 @@ public interface FlightScheduleMapper {
     @Mapping(target = "flight", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    FlightSchedule updateEntity(@MappingTarget FlightSchedule entity, FlightScheduleRequest request);
+    void updateEntity(@MappingTarget FlightSchedule entity, FlightScheduleRequest request);
 
     @Mapping(target = "flightId", source = "flight.id")
     FlightScheduleResponse toResponse(FlightSchedule schedule);

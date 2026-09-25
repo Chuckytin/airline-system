@@ -15,7 +15,7 @@ import lombok.*;
         uniqueConstraints = {
                 @UniqueConstraint(
                         name = "uk_city_country",
-                        columnNames = {"cityCode", "countryCode"} // La combinación de ambos debe ser única
+                        columnNames = {"city_code", "country_code"} // La combinación de ambos debe ser única
                 )
         }
 )

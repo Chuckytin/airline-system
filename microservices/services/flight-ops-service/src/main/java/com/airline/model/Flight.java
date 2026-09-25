@@ -22,7 +22,7 @@ import java.time.Instant;
         uniqueConstraints = {
                 @UniqueConstraint(
                         name = "uk_flight_airline_number",
-                        columnNames = {"airlineId", "flightNumber"}
+                        columnNames = {"airline_id", "flight_number"}
                 )
         }
 )

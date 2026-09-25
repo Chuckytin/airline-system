@@ -19,8 +19,8 @@ import java.time.Instant;
 @Table(
         name = "airlines",
         uniqueConstraints = {
-                @UniqueConstraint(name = "uk_airline_iata_code", columnNames = "iataCode"),
-                @UniqueConstraint(name = "uk_airline_icao_code", columnNames = "icaoCode")
+                @UniqueConstraint(name = "uk_airline_iata_code", columnNames = "iata_code"),
+                @UniqueConstraint(name = "uk_airline_icao_code", columnNames = "icao_code")
         }
 )
 @EntityListeners(AuditingEntityListener.class)
