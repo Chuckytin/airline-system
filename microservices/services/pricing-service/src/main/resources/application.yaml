@@ -1,0 +1,29 @@
+server:
+  port: 5006
+
+spring:
+  application:
+    name: pricing-service
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/airline_pricing_db
+    username: root
+    password: ${MYSQL_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+app:
+  pricing:
+    default-currency: EUR
+    baggage:
+      carry-on-pieces: 1
+      carry-on-weight-kg: 7
+      checked-pieces: 0
+      checked-weight-kg: 0
+      extra-bag-price: 0.00
