@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:pricing_testdb;DB_CLOSE_DELAY=-1;MODE=MySQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+app:
+  pricing:
+    default-currency: EUR
+    baggage:
+      carry-on-pieces: 1
+      carry-on-weight-kg: 7
+      checked-pieces: 0
+      checked-weight-kg: 0
+      extra-bag-price: 0.00
