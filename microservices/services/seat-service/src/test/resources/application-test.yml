@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:seat_testdb;DB_CLOSE_DELAY=-1;MODE=MySQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+app:
+  seat:
+    default-currency: EUR
+    default-price-modifier: 0.00
+    default-active: true
+    exit-row-start: 0
+    exit-row-end: 0
